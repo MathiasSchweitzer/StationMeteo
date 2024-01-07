@@ -13,7 +13,7 @@ async def log(txt):
     with open(path_log, 'a',encoding='utf-8') as file:
         file.write(format()+f" {txt}\n")
     print(format(),txt)
-async def format():
+def format():
     c = datetime.now()
     yyyy = c.year
     mm = c.month
@@ -41,14 +41,14 @@ def __mainf():
 async def start(firstboot=False):
     if firstboot:
         #On veut démarrer le programme la prochaine journée à 00h00 pour avoir des données complètes
-        await log('En attente de 00h00...')
+        log('En attente de 00h00...')
         now = datetime.now()
         next_day = datetime(now.year, now.month, now.day) + timedelta(days=1)
         waitt = (next_day - now).total_seconds()
         threading.Timer(waitt, lambda: start()).start()
 
     else:
-        await log("Démarrage du programme")
+        log("Démarrage du programme")
         while True:
             start_time = time.time()
 
@@ -56,7 +56,7 @@ async def start(firstboot=False):
             thread = threading.Thread(target=__mainf)
             thread.start()
             thread.join()
-            await log('Données enregistrées')
+            log('Données enregistrées')
             end_time = time.time()
             execution_time = end_time - start_time
             #Pour que le programme s'effectue toutes les minutes, on a besoin de soustraire
