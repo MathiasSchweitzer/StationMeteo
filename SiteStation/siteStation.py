@@ -11,8 +11,6 @@ from fastapi.staticfiles import StaticFiles
 from contextlib import asynccontextmanager
 import asyncio
 import init_db
-import Raspberry.init as capteurs
-import signal
 
 JOURS = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"]
 MOIS = [
@@ -40,13 +38,12 @@ TYPES = {
 
 @asynccontextmanager
 async def lancement(app: FastAPI):
-    print("Début")
+    print("Lancement serveur")
     init_db.init()
-    asyncio.create_task(capteurs.run())
     yield
     print("Terminé")
 
-app = FastAPI(lifespan=lancement)
+app = FastAPI()
 
 path = os.path.dirname(__file__)
 
@@ -126,11 +123,6 @@ def jour(request: Request, an: int, mo: int, jo: int):
     data = db.execute('SELECT * FROM data WHERE dateDonnee == "' + dateReq + '"').fetchall()
     db.close()
     return templates.TemplateResponse("jour.html", {"request": request, "jour": jo, "mois": mo, "annee": an, "date": date, "MOIS": MOIS, "JOURS": JOURS, "data": json.dumps(data), "TYPES": TYPES, "distincts": distincts, "distinctsJSON": json.dumps(distincts)})
-
-@app.get("/stop", response_class=HTMLResponse)
-def shutdown():
-    os.kill(os.getpid(), signal.SIGTERM)
-    return Response(status_code=200, content='Extinction du serveur...')
 
 def run():
     uvicorn.run(app)
