@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <script src="https://d3js.org/d3.v4.js"></script>
+    <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+    <script src="{{ url_for('static', path= 'js/graphique.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', path= 'css/graphique.css') }}">
+    <span id="titre" align="center" style="width: 1440px;">
+        <img align="left" class="imgTitre" src="{{ url_for('assets', path= 'flecheGauche.png') }}" onclick="precedent({{ annee|safe }}, {{ mois|safe }}, {{ jour|safe }})" width="30px" height="30px">
+        <h1 class="titre">{{ JOURS[date] }} {{ jour }}</h1><a class="titre" href="/{{ annee|safe }}/{{ mois|safe}}">{{ MOIS[mois][0] }}</a><a class="titre" href="/{{ annee|safe }}">{{ annee }}</a>
+        <img align="right" class="imgTitre" src="{{ url_for('assets', path= 'flecheDroite.png') }}" onclick="suivant({{ annee|safe }}, {{ mois|safe }}, {{ jour|safe }})" width="30px" height="30px">
+    </span>
+    <ul id="choixTypeData" align="center">
+        {% for e in distincts %}
+            <li onclick="menuTypeData(this)" class="menuType" id="{{ e[0] }}">{{ TYPES[e[0]][0] }}</li>
+        {% endfor %}
+    </ul>
+    <div id="graphique" align="center"><h3>Pas de données à cette date</h3></div>
+    <script type="text/javascript">
+        {{ distinctsJSON|safe }}.forEach(e => {
+            creerGraphique(e[0], {{ data|safe }})
+        })
+        let menu = document.getElementsByClassName("menuType")
+        if (menu.length !== 0) {
+            menuTypeData(menu[0])
+        }
+    </script>
+{% endblock %}

@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 import time
 import threading
 import sqlite3
-import capteurs
+import Raspberry.capteurs as capteurs
 import os
 
 path_db = '../data.db'

@@ -1,5 +1,5 @@
 import os
-import station
+import Raspberry.station as station
 import sqlite3
 
 def run():
