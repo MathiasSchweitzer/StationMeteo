@@ -43,7 +43,7 @@ async def lancement(app: FastAPI):
     yield
     print("Terminé")
 
-app = FastAPI()
+app = FastAPI(lifespan=lancement)
 
 path = os.path.dirname(__file__)
 
