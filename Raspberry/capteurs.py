@@ -1,6 +1,6 @@
-import GroveLightSensor as Grove
+import Raspberry.GroveLightSensor as Grove
 import seeed_dht
-import DPS
+import Raspberry.DPS as DPS
 
 sensor_dht = seeed_dht.DHT("22", 22)
 sensor_light = Grove.GroveLightSensor(0)

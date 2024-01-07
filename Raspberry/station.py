@@ -5,7 +5,7 @@ import sqlite3
 import Raspberry.capteurs as capteurs
 import os
 
-path_db = '../data.db'
+path_db = 'data.db'
 path_log = 'log.txt'
 path_sql = 'tables.sql'
 

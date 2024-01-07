@@ -67,7 +67,7 @@ def annee(request: Request, an: int):
         Page pour présenter les mois de l'année renseignée.
         an : Année de la barre d'adresse
     """
-    db = sqlite3.connect("../data.db")
+    db = sqlite3.connect("data.db")
     dateReq = str(an)
     data = db.execute('SELECT DISTINCT(dateDonnee) FROM data WHERE dateDonnee LIKE "' + dateReq + '%"').fetchall()
     db.close()
@@ -96,7 +96,7 @@ def mois(request: Request, an: int, mo: int):
     if ((moisPrec == 2) and ((anPrec % 4 == 0) and ((anPrec % 100 != 0) or (anPrec % 400 == 0)))):
         jourPrec += 1
     skip = datetime.date(an, mo, 1).isoweekday() - 1
-    db = sqlite3.connect("../data.db")
+    db = sqlite3.connect("data.db")
     dateReq = str(an) + str(mo).zfill(2)
     data = db.execute('SELECT DISTINCT(dateDonnee) FROM data WHERE dateDonnee LIKE "' + dateReq + '%"').fetchall()
     db.close()
@@ -117,7 +117,7 @@ def jour(request: Request, an: int, mo: int, jo: int):
     if (not(1 <= mo <= 12) or not(1 <= jo <= MOIS[mo][1])) and not((jo == 29) and (mo == 2) and ((an % 4 == 0) and ((an % 100 != 0) or (an % 400 == 0)))):
         return templates.TemplateResponse("mauvaiseDate.html", {"request": request, "jour": jo, "mois": mo, "annee": an, "title": "Mauvaise date"})
     date = datetime.date(an, mo, jo).isoweekday() - 1
-    db = sqlite3.connect("../data.db")
+    db = sqlite3.connect("data.db")
     dateReq = str(an) + str(mo).zfill(2) + str(jo).zfill(2)
     distincts = db.execute('SELECT DISTINCT(typeDonnee) FROM data WHERE dateDonnee == "' + dateReq + '"').fetchall()
     data = db.execute('SELECT * FROM data WHERE dateDonnee == "' + dateReq + '"').fetchall()
