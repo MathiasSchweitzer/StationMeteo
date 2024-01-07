@@ -1,7 +1,7 @@
 import sqlite3
 import os
 
-async def init():
+def init():
     if not os.path.isfile("data.db"):
         conn = sqlite3.connect("data.db")
         with open("tables.sql") as file:
