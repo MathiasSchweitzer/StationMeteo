@@ -1,12 +1,12 @@
 import os
 import Raspberry.station as station
-import sqlite3
+import asyncio
 
-def run():
+async def run():
     if not os.path.isfile(station.path_log):
         f = open(station.path_log,'w')
         f.close()
-    station.start()
+    asyncio.create_task(station.start())
 
 if __name__ == '__main__':
     run()
