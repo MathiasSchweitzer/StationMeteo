@@ -132,7 +132,7 @@ def shutdown():
     os.kill(os.getpid(), signal.SIGTERM)
     return Response(status_code=200, content='Extinction du serveur...')
 
-async def run():
+def run():
     uvicorn.run(app)
 
 
