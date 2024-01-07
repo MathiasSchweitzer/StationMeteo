@@ -1,5 +1,5 @@
 import uvicorn
-from fastapi import FastAPI, status
+from fastapi import FastAPI, status, Response
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.requests import Request
 from fastapi.templating import Jinja2Templates
@@ -12,6 +12,7 @@ from contextlib import asynccontextmanager
 import asyncio
 import init_db
 import Raspberry.init as capteurs
+import signal
 
 JOURS = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"]
 MOIS = [
@@ -126,8 +127,12 @@ def jour(request: Request, an: int, mo: int, jo: int):
     db.close()
     return templates.TemplateResponse("jour.html", {"request": request, "jour": jo, "mois": mo, "annee": an, "date": date, "MOIS": MOIS, "JOURS": JOURS, "data": json.dumps(data), "TYPES": TYPES, "distincts": distincts, "distinctsJSON": json.dumps(distincts)})
 
+@app.get("/stop", response_class=HTMLResponse)
+def shutdown():
+    os.kill(os.getpid(), signal.SIGTERM)
+    return Response(status_code=200, content='Extinction du serveur...')
 
-def run():
+async def run():
     uvicorn.run(app)
 
 
