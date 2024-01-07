@@ -2,8 +2,7 @@ import os
 import station
 import sqlite3
 
-
-if __name__ == '__main__':
+def run():
     if not os.path.isfile(station.path_db): #Pas de fichier data.db
 
         #On crée aussi le fichier log.txt
@@ -21,5 +20,7 @@ if __name__ == '__main__':
         station.start(firstboot=True)
     else:
         station.start()
-        
+
+if __name__ == '__main__':
+    run()
 
