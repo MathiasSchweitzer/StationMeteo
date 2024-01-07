@@ -11,6 +11,7 @@ from fastapi.staticfiles import StaticFiles
 from contextlib import asynccontextmanager
 import asyncio
 import init_db
+import Raspberry.init as capteurs
 
 JOURS = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"]
 MOIS = [
@@ -40,6 +41,7 @@ TYPES = {
 async def lancement(app: FastAPI):
     print("Début")
     init_db.init()
+    asyncio.create_task(capteurs.run())
     yield
     print("Terminé")
 
