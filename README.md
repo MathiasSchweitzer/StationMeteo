@@ -1,6 +1,7 @@
 Contenu des fichiers de code :
 
 Site :
+
 	graphique.js :
     	Contient le code nécessaire à la création des graphiques ainsi que le changement du graphique sélectionné en appuyant sur les boutons
 
