@@ -3,11 +3,15 @@ from fastapi import FastAPI, status
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.requests import Request
 from fastapi.templating import Jinja2Templates
+from contextlib import asynccontextmanager
 import datetime
 import json
 import os
 import sqlite3
 from fastapi.staticfiles import StaticFiles
+import asyncio
+import init_db
+import Raspberry.init as capteurs
 
 JOURS = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"]
 MOIS = [
@@ -34,7 +38,12 @@ TYPES = {
 }
 
 templates = Jinja2Templates(directory="templates/")
-app = FastAPI()
+
+@asynccontextmanager
+async def lancement(app: FastAPI):
+    init_db.init()
+    asyncio.create_task(capteurs.run())
+app = FastAPI(lifespan=lancement)
 
 path = os.path.dirname(__file__)
 print(path)
@@ -109,7 +118,6 @@ def jour(request: Request, an: int, mo: int, jo: int):
         return templates.TemplateResponse("mauvaiseDate.html", {"request": request, "jour": jo, "mois": mo, "annee": an, "title": "Mauvaise date"})
     date = datetime.date(an, mo, jo).isoweekday() - 1
     db = sqlite3.connect("../data.db")
-    test = db.execute("SELECT * FROM data").fetchall()
     dateReq = str(an) + str(mo).zfill(2) + str(jo).zfill(2)
     distincts = db.execute('SELECT DISTINCT(typeDonnee) FROM data WHERE dateDonnee == "' + dateReq + '"').fetchall()
     data = db.execute('SELECT * FROM data WHERE dateDonnee == "' + dateReq + '"').fetchall()
@@ -119,6 +127,7 @@ def jour(request: Request, an: int, mo: int, jo: int):
 
 def run():
     uvicorn.run(app)
+
 
 if __name__ == "__main__":
     run()
