@@ -3,15 +3,14 @@ from fastapi import FastAPI, status
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.requests import Request
 from fastapi.templating import Jinja2Templates
-from contextlib import asynccontextmanager
 import datetime
 import json
 import os
 import sqlite3
 from fastapi.staticfiles import StaticFiles
+from contextlib import asynccontextmanager
 import asyncio
 import init_db
-import Raspberry.init as capteurs
 
 JOURS = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"]
 MOIS = [
@@ -38,13 +37,13 @@ TYPES = {
 }
 
 @asynccontextmanager
-async def lifespan(app: FastAPI):
+async def lancement(app: FastAPI):
+    print("Début")
     init_db.init()
-    asyncio.create_task(capteurs.run())
     yield
-    return
+    print("Terminé")
 
-app = FastAPI(lifespan=lifespan)
+app = FastAPI(lifespan=lancement)
 
 path = os.path.dirname(__file__)
 
