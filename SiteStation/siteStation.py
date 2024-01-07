@@ -42,6 +42,8 @@ async def lancement(app: FastAPI):
     init_db.init()
     asyncio.create_task(capteurs.run())
     yield
+    return
+
 app = FastAPI(lifespan=lancement)
 
 path = os.path.dirname(__file__)
