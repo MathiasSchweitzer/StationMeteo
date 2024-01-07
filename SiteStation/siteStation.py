@@ -3,7 +3,6 @@ from fastapi import FastAPI, status
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.requests import Request
 from fastapi.templating import Jinja2Templates
-from contextlib import asynccontextmanager
 import datetime
 import json
 import os
@@ -37,11 +36,7 @@ TYPES = {
     "temp2": ["Température (DPS310)", "°C"]
 }
 
-@asynccontextmanager
-async def lancement(app: FastAPI):
-    init_db.init()
-    asyncio.create_task(capteurs.run())
-app = FastAPI(lifespan=lancement)
+app = FastAPI()
 
 path = os.path.dirname(__file__)
 
@@ -122,6 +117,10 @@ def jour(request: Request, an: int, mo: int, jo: int):
     db.close()
     return templates.TemplateResponse("jour.html", {"request": request, "jour": jo, "mois": mo, "annee": an, "date": date, "MOIS": MOIS, "JOURS": JOURS, "data": json.dumps(data), "TYPES": TYPES, "distincts": distincts, "distinctsJSON": json.dumps(distincts)})
 
+@app.on_event("startup")
+async def lancement():
+    init_db.init()
+    asyncio.create_task(capteurs.run())
 
 def run():
     uvicorn.run(app)
