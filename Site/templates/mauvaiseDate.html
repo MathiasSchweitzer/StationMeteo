@@ -1,0 +1,5 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <p>Le {% if jour %}{{ jour }}/{% endif %}{{ mois }}/{{ annee }} n'est pas un jour valide.</p>
+{% endblock %}

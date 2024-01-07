@@ -1,0 +1,82 @@
+#spanMenu {
+    height: auto;
+    min-height: min-content;
+    max-height: max-content;
+    width: fit-content;
+    display: inline;
+    align-items: center;
+}
+
+.spanMenu {
+    border: 3px darkslategrey dashed;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 5px;
+}
+
+.titre {
+    display: inline-block;
+    text-align: center;
+    font-size: 50px;
+    font-weight: bolder;
+}
+
+img.recherche {
+    width: 25px;
+    vertical-align: middle;
+}
+
+img.recherche:hover {
+    cursor: pointer;
+}
+
+.recherche {
+    display: inline-block;
+}
+
+input.recherche {
+    width: 55px;
+    text-align: center;
+}
+
+.menu {
+    display: inline-block;
+    align-items: center;
+}
+
+body {
+    text-align: center;
+}
+
+a.titre {
+    font-style: italic;
+}
+
+a.titre:link {
+    text-decoration: none;
+    color: black
+}
+
+a.titre:visited {
+    text-decoration: none;
+    color: black
+}
+
+a.titre:hover {
+    color: grey;
+    cursor: pointer;
+}
+
+.titre {
+    margin: 5px;
+}
+
+.imgTitre {
+    cursor: pointer;
+}
+
+ul {
+    margin-block-start: 0;
+    margin-block-end: 0;
+    padding-inline-start: 0;
+}
