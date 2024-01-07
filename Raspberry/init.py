@@ -4,16 +4,14 @@ import sqlite3
 
 
 if __name__ == '__main__':
-    path = os.path.join(os.path.dirname(__file__), 'data.db')
-    sql_path = os.path.join(os.path.dirname(__file__), 'tables.sql')
-    if not os.path.isfile(path): #Pas de fichier data.db
+    if not os.path.isfile(station.path_db): #Pas de fichier data.db
 
         #On crée aussi le fichier log.txt
-        if not os.path.isfile(os.path.join(os.path.dirname(__file__), 'log.txt')):
-            f = open(os.path.join(os.path.dirname(__file__), 'log.txt'),'w')
+        if not os.path.isfile(station.path_log):
+            f = open(station.path_log,'w')
             f.close()
         station.log("Création de la base de données...")
-        conn = sqlite3.connect(path)
+        conn = sqlite3.connect(station.path_db)
         with open('tables.sql','r') as query:
             conn.execute(query.read())
         conn.commit()

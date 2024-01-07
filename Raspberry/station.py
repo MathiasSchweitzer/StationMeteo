@@ -5,9 +5,12 @@ import sqlite3
 import capteurs
 import os
 
+path_db = '../data.db'
+path_log = 'log.txt'
+path_sql = 'tables.sql'
 
 def log(txt):
-    with open('log.txt', 'a',encoding='utf-8') as file:
+    with open(path_log, 'a',encoding='utf-8') as file:
         file.write(format()+f" {txt}\n")
     print(format(),txt)
 def format():
@@ -21,7 +24,7 @@ def format():
     return f"[{dd:02d}/{mm:02d}/{yyyy} à {hrs:02d}:{minute:02d}:{s:02d}]"
 
 def __mainf():
-    path = os.path.join(os.path.dirname(__file__), 'data.db')
+    path = os.path.join(path_db)
     conn = sqlite3.connect(path)
     query = 'INSERT OR REPLACE INTO data (dateDonnee, heure, typeDonnee, donnee) VALUES (?, ?, ?, ?)'
     current_date = datetime.now()
