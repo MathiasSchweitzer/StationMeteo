@@ -38,13 +38,13 @@ TYPES = {
 }
 
 @asynccontextmanager
-async def lancement(app: FastAPI):
+async def lifespan(app: FastAPI):
     init_db.init()
     asyncio.create_task(capteurs.run())
     yield
     return
 
-app = FastAPI(lifespan=lancement)
+app = FastAPI(lifespan=lifespan)
 
 path = os.path.dirname(__file__)
 
