@@ -1,0 +1,33 @@
+<!doctype html>
+<html id="root">
+    <head>
+        {% if title %}
+        <title>{{ title }}</title>
+        {% else %}
+        <title>Relevés météorologiques</title>
+        {% endif %}
+        <link rel="stylesheet" href="{{ url_for('static', path= 'css/global.css') }}">
+        <link rel="icon" href="{{ url_for('assets', path= 'favicon.ico') }}" />
+        <script src="{{ url_for('static', path= 'js/global.js') }}"></script>
+        <meta charset="utf-8" lang="fr-FR">
+    </head>
+    <body onload="definiRecherche()">
+        {% block content %}
+        {% endblock %}
+        <span id="spanMenu" align="center">
+            <span id="spanAujourd" class="spanMenu">
+                <button id="aujourd" class="menu" onclick="aujourdhui()">Aujourd'hui</button>
+            </span>
+            <span id="spanRecherche" class="spanMenu" onkeydown="checkRecherche">
+                <form class="menu" id="rechercheForm">
+                    <input class="recherche inputRecherche" type="number" id="rechercheJour" placeholder="Jour">
+                    <p class="recherche">/</p>
+                    <input class="recherche inputRecherche" type="number" id="rechercheMois" placeholder="Mois">
+                    <p class="recherche">/</p>
+                    <input class="recherche inputRecherche" type="number" id="rechercheAnnee" placeholder="Année">
+                    <img class="recherche" src="{{ url_for('assets', path= 'loupe.png') }}" onclick="allerA()"></button>
+                </form>
+            </span>
+        </span>
+    </body>
+</html>
