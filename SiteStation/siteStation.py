@@ -37,8 +37,6 @@ TYPES = {
     "temp2": ["Température (DPS310)", "°C"]
 }
 
-templates = Jinja2Templates(directory="templates/")
-
 @asynccontextmanager
 async def lancement(app: FastAPI):
     init_db.init()
@@ -46,8 +44,8 @@ async def lancement(app: FastAPI):
 app = FastAPI(lifespan=lancement)
 
 path = os.path.dirname(__file__)
-print(path)
 
+templates = Jinja2Templates(directory = path + "/templates/")
 app.mount("/static", StaticFiles(directory = path + "/static"), name="static")
 app.mount("/assets", StaticFiles(directory = path + "/assets"), name="assets")
 
