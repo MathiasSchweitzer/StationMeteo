@@ -1,2 +1,2 @@
-import Raspberry.init as capteurs
-capteurs.run()
+import Raspberry.init as station
+station.run()
