@@ -4,6 +4,10 @@ li.menuType {
     margin-left: 20px;
 }
 
+li.menuType:hover {
+    cursor: pointer;
+}
+
 li.selection {
     font-weight: bold;
 }
