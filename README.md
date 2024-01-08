@@ -1,5 +1,5 @@
 # Setup
-Nous allons utiliser le package [screen](https://wiki.debian.org/fr/Screen) qui nous permettra de séparer le terminal pour la station et le site, ce qui permettra aussi de pouvoir fermer les terminals sans pour autant faire stopper la prise de données.  
+Nous allons utiliser le package [screen](https://wiki.debian.org/fr/Screen) qui nous permettra de séparer le terminal pour la station et le site, ce qui permettra aussi de pouvoir fermer les terminaux sans pour autant faire stopper la prise de données.  
 `sudo apt install screen`  
 Nous allons désormais créer un screen pour faire tourner le site  
 `screen -S site`  
