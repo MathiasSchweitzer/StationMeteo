@@ -88,7 +88,7 @@ function creerGraphique(type, data) {
         .append("path")
             .attr("d", function(d){ return line(d.values) } )
             .style("stroke", "red")
-            .style("stroke-width", 2)
+            .style("stroke-width", 5)
             .style("fill", "none")
 
     //Rajoute le graphique à l'objets charts pour pouvoir choisir lequel est sélectionné
